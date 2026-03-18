@@ -298,7 +298,7 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
       {/* Toggle button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between text-left font-semibold text-foreground hover:opacity-80 transition-opacity"
+        className="w-full flex items-center justify-between text-left font-semibold text-base text-foreground hover:opacity-80 transition-opacity min-h-[52px] px-2"
       >
         <span className="flex items-center gap-2">
           <span>✦</span>
