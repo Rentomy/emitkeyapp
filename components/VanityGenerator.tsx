@@ -350,6 +350,9 @@ export default function VanityGenerator() {
                 </button>
               </div>
 
+              {/* Security Tip */}
+              <SecurityTip />
+
               {/* Transparency notice */}
               <div className="bg-card border border-border rounded-md p-3 text-xs text-muted-foreground flex items-start gap-2">
                 <span className="text-sm shrink-0 mt-0.5">🔒</span>
@@ -361,6 +364,22 @@ export default function VanityGenerator() {
           )}
         </div>
       )}
+    </div>
+  );
+}
+
+/* ── Security Tip ─────────────────────────────────────────────── */
+
+function SecurityTip() {
+  return (
+    <div className="bg-emerald-950/30 border border-emerald-900/40 rounded-lg p-4 flex flex-col gap-2">
+      <div className="flex items-center gap-2">
+        <ShieldCheckIcon />
+        <span className="text-emerald-400 font-semibold text-sm">Security Tip</span>
+      </div>
+      <p className="text-emerald-300/70 text-xs leading-relaxed">
+        Before storing large amounts — test your wallet first. Send a small amount (e.g. 0.001 ETH) to your new address, then import the private key into MetaMask or MyEtherWallet and verify you can access and send those funds. Only then use it for cold storage.
+      </p>
     </div>
   );
 }
@@ -472,6 +491,14 @@ function WarningIcon() {
   return (
     <svg className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+    </svg>
+  );
+}
+
+function ShieldCheckIcon() {
+  return (
+    <svg className="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
     </svg>
   );
 }
