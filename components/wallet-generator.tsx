@@ -46,12 +46,8 @@ export default function WalletGenerator() {
     }
   }, []);
 
-  const handlePrint = async () => {
+  const handlePrint = () => {
     if (!wallet) return;
-
-    // Generate fresh QR codes as base64 PNG data URLs
-    const qrAddress = await QRCode.toDataURL(wallet.address, { width: 160, margin: 1 });
-    const qrPrivKey = await QRCode.toDataURL(wallet.privateKey, { width: 160, margin: 1 });
 
     const printWindow = window.open("", "_blank");
     if (!printWindow) return;
@@ -89,11 +85,11 @@ export default function WalletGenerator() {
             </div>
             <div class="qr-pair">
               <div class="qr-box">
-                <img src="${qrAddress}" width="140" height="140" alt="Address QR" />
+                <img src="${wallet.addressQR}" width="140" height="140" alt="Address QR" />
                 <div class="qr-label">Public Address</div>
               </div>
               <div class="qr-box">
-                <img src="${qrPrivKey}" width="140" height="140" alt="Private Key QR" />
+                <img src="${wallet.privateKeyQR}" width="140" height="140" alt="Private Key QR" />
                 <div class="qr-label">Private Key</div>
               </div>
             </div>
