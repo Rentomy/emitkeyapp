@@ -98,7 +98,7 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
       setShowPrivateKey(false);
       setIsOpen(false);
     },
-  }));
+  }), [searching]);
 
   // Initialize worker on mount
   useEffect(() => {
