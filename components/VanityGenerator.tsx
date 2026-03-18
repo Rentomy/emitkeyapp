@@ -142,12 +142,14 @@ export default function VanityGenerator() {
 
   const handlePrefixChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toLowerCase();
-    // Only allow hex characters (0-9, a-f) and max 6 chars
-    if (/^[0-9a-f]*$/.test(value) && value.length <= 6) {
+    // Allow any alphanumeric character (0-9, a-z) and max 6 chars
+    if (/^[0-9a-z]*$/.test(value) && value.length <= 6) {
       setPrefix(value);
       setError("");
-    } else if (!/^[0-9a-f]*$/.test(value)) {
-      setError("Only hex characters allowed: 0–9, a–f");
+    } else if (value.length <= 6) {
+      // Accept the value but keep the error empty - we'll show the info note instead
+      setPrefix(value.toLowerCase());
+      setError("");
     }
   };
 
@@ -319,9 +321,24 @@ export default function VanityGenerator() {
 
               {/* Helper text */}
               {prefix && (
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Max 6 characters. 4 chars = {estimatedTime(4)} · 5 chars = {estimatedTime(5)} · 6 chars = {estimatedTime(6)}
-                </p>
+                <>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Max 6 characters · letters and numbers allowed · case-insensitive
+                  </p>
+
+                  {/* Non-hex character warning */}
+                  {!/^[0-9a-f]*$/.test(prefix) && (
+                    <div className="bg-card border border-border rounded-md p-2 text-xs text-muted-foreground flex items-start gap-2">
+                      <span className="text-sm shrink-0 mt-0.5">ℹ️</span>
+                      <span>
+                        Note: Ethereum addresses only contain 0–9 and a–f. Characters like '{(() => {
+                          const invalidChars = prefix.split('').filter(c => !/^[0-9a-f]$/.test(c));
+                          return invalidChars.filter((c, i, arr) => arr.indexOf(c) === i).slice(0, 3).join(', ');
+                        })()}' will never match.
+                      </span>
+                    </div>
+                  )}
+                </>
               )}
 
               {/* Warning banner */}
