@@ -1,5 +1,4 @@
 "use client";
-// VanityGenerator v3 - Restructured layout
 
 import {
   useState,
@@ -109,6 +108,10 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
 
   // Create a new worker instance
   const createWorker = useCallback(() => {
+    // Revoke old blob URL if it exists to prevent memory leak
+    if (workerUrlRef.current) {
+      URL.revokeObjectURL(workerUrlRef.current);
+    }
     const blob = new Blob([WORKER_CODE], { type: "application/javascript" });
     const workerUrl = URL.createObjectURL(blob);
     workerUrlRef.current = workerUrl;
@@ -308,7 +311,7 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
   };
 
   return (
-    <div className="w-full space-y-3" data-vanity>
+    <div className="w-full space-y-4" data-vanity>
       {/* Generate New Wallet Button */}
       <button
         onClick={handleGenerateWallet}
@@ -347,6 +350,7 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
                   placeholder="e.g. dead, 1337, cafe"
                   maxLength={6}
                   disabled={searching}
+                  aria-label="Vanity address prefix"
                   className="w-full px-3 py-2 bg-card border border-border rounded-md text-foreground font-mono text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
                 />
                 <div className="flex items-center justify-between">
@@ -392,7 +396,7 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
                   </>
                 )}
 
-                <div className="flex gap-3 pt-2">
+                <div className="flex gap-4 pt-2">
                   {!searching ? (
                     <button
                       onClick={handleStartSearch}
@@ -443,7 +447,7 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
                     <span className="font-mono text-sm text-foreground bg-card border border-border rounded-md px-3 py-2 break-all flex-1 leading-relaxed">
                       {vanityWallet.address}
                     </span>
-                    <CopyButton value={vanityWallet.address} />
+                    <CopyButton value={vanityWallet.address} label="Copy address" />
                   </div>
                 </div>
 
@@ -473,11 +477,11 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
                       onClick={() => setShowPrivateKey((v) => !v)}
                       title={showPrivateKey ? "Hide private key" : "Reveal private key"}
                       className="p-2 rounded-md border border-border text-muted-foreground hover:text-foreground hover:border-muted transition-colors flex-shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center"
-                      aria-label={showPrivateKey ? "Hide private key" : "Reveal private key"}
+                      aria-label={showPrivateKey ? "Hide private key" : "Show private key"}
                     >
                       {showPrivateKey ? <EyeOffIcon /> : <EyeIcon />}
                     </button>
-                    {showPrivateKey && <CopyButton value={vanityWallet.privateKey} />}
+                    {showPrivateKey && <CopyButton value={vanityWallet.privateKey} label="Copy private key" />}
                   </div>
                   <p className="text-xs text-amber-500 mt-1 flex items-center gap-1">
                     <WarningIcon />
@@ -495,7 +499,7 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
                   />
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-3 pt-2 w-full">
+                <div className="flex flex-col sm:flex-row gap-4 pt-2 w-full">
                   <button
                     onClick={() => handlePrint(vanityWallet)}
                     className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-border text-sm text-foreground hover:bg-card transition-colors w-full sm:w-auto min-h-[44px]"
@@ -552,6 +556,7 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
                     setVerifyError(null);
                   }}
                   placeholder="Paste your private key here (0x...)"
+                  aria-label="Private key to verify"
                   className="w-full px-3 py-2 bg-card border border-border rounded-md text-foreground font-mono text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent pr-10"
                 />
                 <button
@@ -589,7 +594,7 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
                 <p className="text-xs text-emerald-300/70">Your private key correctly corresponds to this address:</p>
                 <div className="bg-card border border-border rounded-md p-3 flex items-center justify-between gap-2">
                   <code className="text-sm font-mono text-emerald-300 break-all">{verifiedAddress}</code>
-                  <CopyButton value={verifiedAddress} />
+                  <CopyButton value={verifiedAddress} label="Copy address" />
                 </div>
               </div>
             )}
@@ -639,7 +644,7 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
                   <span className="font-mono text-sm text-foreground bg-card border border-border rounded-md px-3 py-2 break-all flex-1 leading-relaxed">
                     {generatedWallet.address}
                   </span>
-                  <CopyButton value={generatedWallet.address} />
+                  <CopyButton value={generatedWallet.address} label="Copy address" />
                 </div>
               </div>
 
@@ -669,11 +674,11 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
                     onClick={() => setShowPrivateKey((v) => !v)}
                     title={showPrivateKey ? "Hide private key" : "Reveal private key"}
                     className="p-2 rounded-md border border-border text-muted-foreground hover:text-foreground hover:border-muted transition-colors flex-shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center"
-                    aria-label={showPrivateKey ? "Hide private key" : "Reveal private key"}
+                    aria-label={showPrivateKey ? "Hide private key" : "Show private key"}
                   >
                     {showPrivateKey ? <EyeOffIcon /> : <EyeIcon />}
                   </button>
-                  {showPrivateKey && <CopyButton value={generatedWallet.privateKey} />}
+                  {showPrivateKey && <CopyButton value={generatedWallet.privateKey} label="Copy private key" />}
                 </div>
                 <p className="text-xs text-amber-500 mt-1 flex items-center gap-1">
                   <WarningIcon />
@@ -691,7 +696,7 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
                 />
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 pt-2 w-full">
+              <div className="flex flex-col sm:flex-row gap-4 pt-2 w-full">
                 <button
                   onClick={() => handlePrint(generatedWallet)}
                   className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-border text-sm text-foreground hover:bg-card transition-colors w-full sm:w-auto min-h-[44px]"
@@ -711,9 +716,9 @@ const VanityGenerator = forwardRef<VanityGeneratorHandle>(function VanityGenerat
 VanityGenerator.displayName = "VanityGenerator";
 export default VanityGenerator;
 
-/* ── Small sub-components ─────────────────────────────────────── */
+/* Small sub-components */
 
-function CopyButton({ value }: { value: string }) {
+function CopyButton({ value, label = "Copy to clipboard" }: { value: string; label?: string }) {
   const [copied, setCopied] = useState(false);
   const handleCopy = async () => {
     const ok = await copyToClipboard(value);
@@ -725,8 +730,8 @@ function CopyButton({ value }: { value: string }) {
   return (
     <button
       onClick={handleCopy}
-      title="Copy to clipboard"
-      aria-label="Copy to clipboard"
+      title={label}
+      aria-label={label}
       className="p-2 rounded-md border border-border text-muted-foreground hover:text-accent hover:border-accent transition-colors flex-shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center"
     >
       {copied ? <CheckIcon /> : <CopyIconUI />}
@@ -749,7 +754,6 @@ function QRPanel({
     <div className="flex flex-col items-center gap-2 bg-card border border-border rounded-lg p-4 flex-1">
       <p className="text-xs text-muted-foreground uppercase tracking-widest">{label}</p>
       <div className="relative">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
           alt={`${label} QR code`}
@@ -769,7 +773,7 @@ function QRPanel({
   );
 }
 
-/* ── Icons ────────────────────────────────────────────────────── */
+/* Icons */
 function EyeIcon() {
   return (
     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
