@@ -112,7 +112,7 @@ export default function WalletGenerator() {
               <span className="font-mono text-sm text-foreground bg-card border border-border rounded-md px-3 py-2 break-all flex-1 leading-relaxed">
                 {wallet.address}
               </span>
-              <CopyButton value={wallet.address} />
+              <CopyButton value={wallet.address} label="Copy address" />
             </div>
           </div>
 
@@ -143,11 +143,11 @@ export default function WalletGenerator() {
                 onClick={() => setShowPrivateKey((v) => !v)}
                 title={showPrivateKey ? "Hide private key" : "Reveal private key"}
                 className="p-2 rounded-md border border-border text-muted-foreground hover:text-foreground hover:border-muted transition-colors flex-shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center"
-                aria-label={showPrivateKey ? "Hide private key" : "Reveal private key"}
+                aria-label={showPrivateKey ? "Hide private key" : "Show private key"}
               >
                 {showPrivateKey ? <EyeOffIcon /> : <EyeIcon />}
               </button>
-              {showPrivateKey && <CopyButton value={wallet.privateKey} />}
+              {showPrivateKey && <CopyButton value={wallet.privateKey} label="Copy private key" />}
             </div>
             <p className="text-xs text-amber-500 mt-1 flex items-center gap-1">
               <WarningIcon />
@@ -167,7 +167,7 @@ export default function WalletGenerator() {
           </div>
 
           {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-3 mt-2 w-full">
+          <div className="flex flex-col sm:flex-row gap-4 mt-2 w-full">
             <button
               onClick={handlePrint}
               className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-border text-sm text-foreground hover:bg-card transition-colors w-full sm:w-auto min-h-[44px]"
@@ -196,7 +196,7 @@ export default function WalletGenerator() {
   );
 }
 
-/* ��─ Small sub-components ─────────────────────────────────────── */
+/* Small sub-components */
 
 function SecurityTip() {
   return (
@@ -215,7 +215,7 @@ function SecurityTip() {
   );
 }
 
-function CopyButton({ value }: { value: string }) {
+function CopyButton({ value, label = "Copy to clipboard" }: { value: string; label?: string }) {
   const [copied, setCopied] = useState(false);
   const handleCopy = async () => {
     const ok = await copyToClipboard(value);
@@ -227,8 +227,8 @@ function CopyButton({ value }: { value: string }) {
   return (
     <button
       onClick={handleCopy}
-      title="Copy to clipboard"
-      aria-label="Copy to clipboard"
+      title={label}
+      aria-label={label}
       className="p-2 rounded-md border border-border text-muted-foreground hover:text-accent hover:border-accent transition-colors flex-shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center"
     >
       {copied ? <CheckIcon /> : <CopyIcon />}
@@ -251,7 +251,6 @@ function QRPanel({
     <div className="flex flex-col items-center gap-2 bg-card border border-border rounded-lg p-4">
       <p className="text-xs text-muted-foreground uppercase tracking-widest">{label}</p>
       <div className="relative">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
           alt={`${label} QR code`}
@@ -271,7 +270,7 @@ function QRPanel({
   );
 }
 
-/* ── Icons ────────────────────────────────────────────────────── */
+/* Icons */
 function EyeIcon() {
   return (
     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
