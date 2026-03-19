@@ -181,6 +181,17 @@ export default function WalletGenerator() {
           <SecurityTip />
         </>
       )}
+
+      {/* New Session Button - centered below container */}
+      <div className="flex justify-center pt-4">
+        <button
+          onClick={handleReset}
+          aria-label="Reset session"
+          className="px-6 py-2 rounded-lg bg-zinc-700 hover:bg-zinc-600 text-white font-semibold text-sm transition-colors min-h-[44px]"
+        >
+          ↺ New Session
+        </button>
+      </div>
     </div>
   );
 }
