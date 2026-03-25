@@ -435,13 +435,7 @@ export default function HowItWorksPage() {
           </p>
         </div>
 
-        {/* Notice */}
-        <div className="w-full max-w-2xl bg-zinc-900 border border-zinc-800 rounded-xl p-4">
-          <p className="text-xs text-zinc-400 leading-relaxed">
-            Everything in this explanation works independently of emitkey.com. Even if this site no
-            longer exists — your paper wallets and private keys work on Ethereum forever.
-          </p>
-        </div>
+
       </main>
 
       <Footer />
