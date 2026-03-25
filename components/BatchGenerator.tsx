@@ -47,11 +47,11 @@ const BatchGenerator = forwardRef<BatchGeneratorHandle>(function BatchGenerator(
 
     try {
       const generatedWallets: BatchWallet[] = [];
-      
+
       for (let i = 0; i < count; i += 10) {
         const batchSize = Math.min(10, count - i);
         const batch: BatchWallet[] = [];
-        
+
         for (let j = 0; j < batchSize; j++) {
           const w = ethers.Wallet.createRandom();
           batch.push({
@@ -60,14 +60,14 @@ const BatchGenerator = forwardRef<BatchGeneratorHandle>(function BatchGenerator(
             privateKey: w.privateKey,
           });
         }
-        
+
         generatedWallets.push(...batch);
         setProgress(generatedWallets.length);
-        
+
         // Non-blocking: yield to UI
         await new Promise((r) => setTimeout(r, 0));
       }
-      
+
       setWallets(generatedWallets);
     } catch (err) {
       setError("Failed to generate batch wallets");
@@ -247,8 +247,6 @@ const BatchGenerator = forwardRef<BatchGeneratorHandle>(function BatchGenerator(
         <div className="p-6 space-y-4 bg-background border-t border-zinc-700">
           {/* Intro text */}
           <div className="text-xs text-muted-foreground leading-relaxed space-y-2">
-            <p>Generate multiple wallets at once and export as CSV or PDF.</p>
-            <p>All wallets are generated locally — nothing is transmitted.</p>
           </div>
 
           {/* Security Warning */}
@@ -271,11 +269,10 @@ const BatchGenerator = forwardRef<BatchGeneratorHandle>(function BatchGenerator(
                     <button
                       key={q}
                       onClick={() => setQuantity(q)}
-                      className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors min-h-[40px] ${
-                        quantity === q
+                      className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors min-h-[40px] ${quantity === q
                           ? "bg-emerald-500 text-zinc-950"
                           : "bg-zinc-800 hover:bg-zinc-700 text-zinc-300"
-                      }`}
+                        }`}
                     >
                       {q}
                     </button>
