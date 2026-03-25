@@ -28,7 +28,7 @@ export default function Home() {
         </header>
 
         {/* Card */}
-        <div className="w-full max-w-2xl bg-card border border-border rounded-xl p-6 shadow-lg shadow-black/40">
+        <div className="w-full max-w-2xl bg-card border border-border rounded-xl p-4 sm:p-6 shadow-lg shadow-black/40">
           <WalletGenerator />
         </div>
       </main>

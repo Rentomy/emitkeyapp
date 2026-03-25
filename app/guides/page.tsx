@@ -1,6 +1,17 @@
+"use client";
+
 import Footer from "@/components/Footer";
 import GuideCard from "@/components/GuideCard";
 import { useState } from "react";
+
+function BookIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+    </svg>
+  );
+}
 
 function ShieldCheckIcon({ className }: { className?: string }) {
   return (
@@ -80,7 +91,7 @@ export default function GuidesPage() {
         {/* Header */}
         <header className="w-full max-w-2xl mb-10 text-center">
           <div className="inline-flex items-center gap-2 text-xs text-accent font-mono uppercase tracking-widest mb-4">
-            <span>📚</span>
+            <BookIcon className="w-4 h-4" />
             Security Guides
           </div>
           <h1 className="text-3xl font-bold text-foreground text-balance leading-tight mb-3">
@@ -101,11 +112,8 @@ export default function GuidesPage() {
 
         {/* Notice */}
         <div className="w-full max-w-2xl mb-10 bg-zinc-900 border border-zinc-800 rounded-xl p-4">
-          <p className="text-xs text-zinc-400 leading-relaxed flex items-start gap-2">
-            <span className="text-sm shrink-0">🔒</span>
-            <span>
-              Everything in these guides works independently of emitkey.com. Even if this site no longer exists — your paper wallets and private keys work on Ethereum forever.
-            </span>
+          <p className="text-xs text-zinc-400 leading-relaxed">
+            Everything in these guides works independently of emitkey.com. Even if this site no longer exists — your paper wallets and private keys work on Ethereum forever.
           </p>
         </div>
 
@@ -131,7 +139,7 @@ export default function GuidesPage() {
                 {[
                   "Open emitkey.com on any device",
                   "Disconnect from the internet (airplane mode)",
-                  "Click \"Generate Wallet\"",
+                  'Click "Generate Wallet"',
                   "Write down your private key by hand — or print the wallet",
                   "Verify: use the Verify Wallet tool, enter your private key, confirm the address matches",
                 ].map((step, i) => (
@@ -140,49 +148,47 @@ export default function GuidesPage() {
                     <span>{step}</span>
                   </li>
                 ))}
-              </ol>
-              
-              {/* Step 6 - New collapsible section */}
-              <li className="flex gap-3 mt-2">
-                <span className="font-semibold shrink-0">6.</span>
-                <div className="flex-1 space-y-3">
-                  <span>Optional: Test your wallet — understand the trade-off first</span>
-                  
-                  <CollapsibleWarning title="⚠ Security trade-off" defaultOpen={true}>
-                    <p>Importing your private key into any wallet app — even MetaMask or Trust Wallet — means your key has been on an internet-connected device. This reduces the air-gap security of your paper wallet.</p>
-                    <p>For maximum security: skip this step and rely on the Verify Wallet tool (Step 5) instead.</p>
-                  </CollapsibleWarning>
-                  
-                  <div className="space-y-2 pl-3 border-l border-zinc-700">
-                    <p className="font-semibold text-zinc-200">If you still want to do a live test:</p>
-                    <ol className="space-y-1 text-xs text-zinc-300 list-decimal list-inside">
-                      <li>Send a small amount (e.g. 0.001 ETH) to your new address</li>
-                      <li>Import your private key into MetaMask or Trust Wallet</li>
-                      <li>Confirm you can see the balance and send funds back out</li>
-                      <li>Immediately after testing:
-                        <ul className="space-y-1 mt-1 ml-4 list-disc list-inside">
-                          <li>Remove the wallet from MetaMask: Settings → Advanced → Remove Account</li>
-                          <li>Clear your clipboard if you copied the key</li>
-                          <li>Consider this wallet "touched" — it has been on a hot device</li>
-                        </ul>
-                      </li>
-                      <li>Generate a fresh paper wallet on emitkey.com (offline) for your actual cold storage — use the tested wallet only as a practice run</li>
-                    </ol>
+
+                {/* Step 6 */}
+                <li className="flex gap-3">
+                  <span className="font-semibold shrink-0">6.</span>
+                  <div className="flex-1 space-y-3">
+                    <span>Optional: Test your wallet — understand the trade-off first</span>
+                    <CollapsibleWarning title="Security trade-off" defaultOpen={true}>
+                      <p>Importing your private key into any wallet app — even MetaMask or Trust Wallet — means your key has been on an internet-connected device. This reduces the air-gap security of your paper wallet.</p>
+                      <p>For maximum security: skip this step and rely on the Verify Wallet tool (Step 5) instead.</p>
+                    </CollapsibleWarning>
+                    <div className="space-y-2 pl-3 border-l border-zinc-700">
+                      <p className="font-semibold text-zinc-200">If you still want to do a live test:</p>
+                      <ol className="space-y-1 list-decimal list-inside">
+                        <li>Send a small amount (e.g. 0.001 ETH) to your new address</li>
+                        <li>Import your private key into MetaMask or Trust Wallet</li>
+                        <li>Confirm you can see the balance and send funds back out</li>
+                        <li>
+                          Immediately after testing:
+                          <ul className="space-y-1 mt-1 ml-4 list-disc list-inside">
+                            <li>Remove the wallet from MetaMask: Settings → Advanced → Remove Account</li>
+                            <li>Clear your clipboard if you copied the key</li>
+                            <li>{"Consider this wallet \"touched\" — it has been on a hot device"}</li>
+                          </ul>
+                        </li>
+                        <li>Generate a fresh paper wallet on emitkey.com (offline) for your actual cold storage</li>
+                      </ol>
+                    </div>
+                    <BoxBg type="best-practice">
+                      <p className="font-semibold text-emerald-300">The safest approach</p>
+                      <p>Use the Verify Wallet tool on emitkey.com (Step 5) to confirm your key is valid — without connecting to the internet or importing into any app.</p>
+                      <p>Then send a small amount and monitor the balance on etherscan.io. Only move larger amounts once you are confident everything works.</p>
+                    </BoxBg>
                   </div>
-                  
-                  <BoxBg type="best-practice">
-                    <p className="font-semibold text-emerald-300">✅ The safest approach</p>
-                    <p>Use the Verify Wallet tool on emitkey.com (Step 5) to confirm your key is valid — without connecting to the internet or importing into any app.</p>
-                    <p>Then send a small amount and monitor the balance on etherscan.io. Only move larger amounts once you are confident everything works.</p>
-                  </BoxBg>
-                </div>
-              </li>
-              
-              {/* Step 7 */}
-              <li className="flex gap-3 mt-2">
-                <span className="font-semibold shrink-0">7.</span>
-                <span>Store your paper wallet in a sealed envelope in a safe, lockbox, or with a notary</span>
-              </li>
+                </li>
+
+                {/* Step 7 */}
+                <li className="flex gap-3">
+                  <span className="font-semibold shrink-0">7.</span>
+                  <span>Store your paper wallet in a sealed envelope in a safe, lockbox, or with a notary</span>
+                </li>
+              </ol>
             </Section>
 
             <BoxBg type="remember">
@@ -287,7 +293,7 @@ export default function GuidesPage() {
             </Section>
 
             <Section title="Instruction letter template">
-              <div className="bg-zinc-950 border border-zinc-800 rounded p-3 font-mono text-xs text-zinc-300 overflow-auto max-h-64">
+              <div className="bg-zinc-950 border border-zinc-800 rounded p-3 font-mono text-xs text-zinc-300">
                 <pre className="whitespace-pre-wrap break-words">{`Dear [Name],
 
 This envelope contains access to an Ethereum wallet.

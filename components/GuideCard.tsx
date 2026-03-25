@@ -25,14 +25,6 @@ function ChevronDownIcon({ className }: { className?: string }) {
   );
 }
 
-interface GuideCardProps {
-  icon: string;
-  badge: string;
-  title: string;
-  intro: string;
-  children: React.ReactNode;
-}
-
 export default function GuideCard({
   icon,
   badge,
@@ -135,32 +127,24 @@ export default function GuideCard({
   return (
     <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
       {/* Header */}
-      <div className="flex items-start gap-4 cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
-        <div className="flex flex-col items-center gap-1">
-          <span className="text-4xl">{icon}</span>
-          <span className="text-xs font-semibold text-zinc-500 bg-zinc-800 px-2 py-1 rounded">
-            {badge}
-          </span>
-        </div>
+      <button
+        className="w-full flex items-start gap-3 text-left"
+        onClick={() => setIsExpanded(!isExpanded)}
+        aria-expanded={isExpanded}
+      >
+        <span className="text-xs font-semibold text-zinc-500 bg-zinc-800 px-2 py-1 rounded shrink-0 mt-0.5">
+          {badge}
+        </span>
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-semibold text-white">{title}</h3>
-          <p className="text-sm text-zinc-400 mt-2 leading-relaxed">{intro}</p>
+          <h3 className="text-base font-semibold text-white text-balance leading-snug">{title}</h3>
+          <p className="text-xs text-zinc-400 mt-1.5 leading-relaxed">{intro}</p>
         </div>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsExpanded(!isExpanded);
-          }}
-          aria-label={isExpanded ? "Collapse" : "Expand"}
-          className="flex-shrink-0 p-1 rounded-md text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
-        >
-          <ChevronDownIcon
-            className={`w-5 h-5 transition-transform ${
-              isExpanded ? "rotate-180" : ""
-            }`}
-          />
-        </button>
-      </div>
+        <ChevronDownIcon
+          className={`w-5 h-5 shrink-0 text-zinc-400 transition-transform mt-0.5 ${
+            isExpanded ? "rotate-180" : ""
+          }`}
+        />
+      </button>
 
       {/* Expanded Content */}
       {isExpanded && (

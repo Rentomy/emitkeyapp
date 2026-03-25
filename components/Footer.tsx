@@ -25,13 +25,13 @@ export default function Footer() {
         </div>
 
         {/* Tagline */}
-        <p className="text-xs text-muted-foreground tracking-wide flex flex-wrap justify-center gap-1">
+        <p className="text-xs text-muted-foreground tracking-wide flex flex-wrap justify-center gap-x-2 gap-y-0.5">
           <span>Open source</span>
-          <span className="hidden sm:inline">&middot;</span>
+          <span aria-hidden="true">&middot;</span>
           <span>Auditable</span>
-          <span className="hidden sm:inline">&middot;</span>
+          <span aria-hidden="true">&middot;</span>
           <span>No server</span>
-          <span className="hidden sm:inline">&middot;</span>
+          <span aria-hidden="true">&middot;</span>
           <span>No tracking</span>
         </p>
 

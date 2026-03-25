@@ -154,10 +154,9 @@ export default function WalletGenerator() {
           </div>
           
           {showOnlineError ? (
-            <div className="w-full py-3 rounded-lg bg-red-950/50 border border-red-900/40 text-red-400 font-semibold text-sm text-center min-h-[44px] flex items-center justify-center">
-              ⚠ You are still connected to the internet.
-              <br />
-              Please enable airplane mode or turn off WiFi, then try again.
+            <div className="w-full py-3 px-4 rounded-lg bg-red-950/50 border border-red-900/40 text-red-400 text-sm text-center leading-relaxed">
+              <p className="font-semibold">You are still connected to the internet.</p>
+              <p className="text-xs mt-1 text-red-400/80">Enable airplane mode or turn off WiFi, then try again.</p>
             </div>
           ) : (
             <button
