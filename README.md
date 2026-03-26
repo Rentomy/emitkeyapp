@@ -105,32 +105,6 @@ A wallet generated on emitkey works on all EVM-compatible networks:
 
 ---
 
-## Project Structure
-
-```
-emitkey/
-├── app/
-│   ├── page.tsx              # Main wallet generator
-│   ├── guides/               # Security guides
-│   │   └── page.tsx
-│   ├── how-it-works/         # Cryptography explainer
-│   │   └── page.tsx
-│   └── layout.tsx            # Root layout & SEO metadata
-├── components/
-│   ├── WalletGenerator.tsx   # Core wallet generation logic
-│   └── Footer.tsx            # Shared footer
-├── lib/
-│   └── utils.ts              # Utility functions
-├── types/
-│   └── wallet.ts             # TypeScript interfaces
-└── public/
-    ├── sw.js                 # Service Worker (PWA)
-    ├── favicon.ico
-    └── site.webmanifest
-```
-
----
-
 ## Guides
 
 emitkey includes three security guides for safely using paper wallets:
